@@ -5,6 +5,10 @@
  */
 export default [
   {
+    path: '/reservation',
+    view: 'Reservation'
+  },
+  {
     path: '/dashboard',
     // Relative to /src/views
     view: 'Dashboard'

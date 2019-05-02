@@ -87,6 +87,11 @@ export default {
     logo: './img/vuetifylogo.png',
     links: [
       {
+        to: '/reservation',
+        icon: 'mdi-view-dashboard',
+        text: 'Reservation'
+      },
+      {
         to: '/dashboard',
         icon: 'mdi-view-dashboard',
         text: 'Dashboard'
