@@ -19,6 +19,11 @@ export default [
     view: 'UserProfile'
   },
   {
+    path: '/RoomDetail',
+    name: 'RoomDetail',
+    view: 'RoomDetail'
+  },
+  {
     path: '/table-list',
     name: 'Table List',
     view: 'TableList'
