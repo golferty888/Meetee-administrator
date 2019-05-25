@@ -5,12 +5,14 @@
 
     <v-container
       fluid
-      grid-list-xl>
+      grid-list-xl
+    >
 
       <v-flex
         xs12
         sm3
-        d-flex>
+        d-flex
+      >
 
         <v-select
           :items="items"
@@ -21,112 +23,16 @@
 
       <v-flex
         xs12
-        lg3>
-        <v-menu
-          v-model="menu1"
-          :close-on-content-click="false"
-          full-width
-          max-width="290"
-        >
-
-          <v-text-field
-            :value="computedDateFormattedMomentjs"
-            clearable
-            label="select date"
-            readonly
-          />
-
-          <!-- <template v-slot:activator="{ on }">
-            <v-text-field
-              :value="computedDateFormattedMomentjs"
-              clearable
-              label="select date"
-              readonly
-              v-on="on"
-            />
-          </template> -->
-
-          <!-- <v-date-picker
-            v-model="date"
-            @change="menu1 = false"
-          />
-        </v-menu>
-      </v-flex>
-      </v-layout>
-    </v-container>
-
-    <v-layout
-      row
-      wrap>
-      <v-flex
-        xs11
-        sm3>
-        <v-menu
-          ref="menu"
-          v-model="menu2"
-          :close-on-content-click="false"
-          :nudge-right="40"
-          :return-value.sync="time"
-          lazy
-          transition="scale-transition"
-          offset-y
-          full-width
-          max-width="290px"
-          min-width="290px"
-        >
-          <template v-slot:activator="{ on }">
-            <v-text-field
-              v-model="time"
-              label="start time"
-              readonly
-              v-on="on"
-            />
-          </template>
-          <v-time-picker
-            v-if="menu2"
-            v-model="time"
-            full-width
-            @click:minute="$refs.menu.save(time)"
-          />
-        </v-menu>
-        <v-menu
-          ref="menu"
-          v-model="menu3"
-          :close-on-content-click="false"
-          :nudge-right="40"
-          :return-value.sync="time"
-          lazy
-          transition="scale-transition"
-          offset-y
-          full-width
-          max-width="290px"
-          min-width="290px"
-        >
-          <template v-slot:activator="{ on }">
-            <v-text-field
-              v-model="time"
-              label="end time"
-              readonly
-              v-on="on"
-            />
-          </template>
-          <v-time-picker
-            v-if="menu3"
-            v-model="time"
-            full-width
-            @click:minute="$refs.menu.save(time)"
-          /> -->
-
-        </v-menu>
-
-      </v-flex>
-      <v-spacer/>
+        lg3
+      />
+      <v-spacer />
 
       <v-layout
         align-center
         justify-start
         row
-        wrap>
+        wrap
+      >
         <v-flex
           v-for="room in rooms"
           :key="room.id"
@@ -136,33 +42,35 @@
           <v-card>
             <a
               class="card-link"
-              href="/RoomDetail">
-
+              href="/RoomDetail"
+            >
               <v-img
                 class="black--text"
                 height="100px"
               >
                 <v-container
                   fill-height
-                  fluid>
-
-                  <v-layout justify-space-around/>
+                  fluid
+                >
+                  <v-layout justify-space-around />
                 </v-container>
               </v-img>
 
               <v-card-title>
                 <div>
                   <span class="grey--text">{{ room.title }}</span><br>
-                  <span/>{{ room.name }}<br>
+                  <span />{{ room.name }}<br>
                   <span :style="{color: room.color}">status : {{ room.status }} ({{ room.startTime }}-{{ room.endTime }})</span>
                 </div>
               </v-card-title>
-
-          </a></v-card>
+            </a>
+          </v-card>
         </v-flex>
       </v-layout>
-    </v-layout></v-container>
-</v-container></template>
+      <!-- </v-layout> -->
+    </v-container>
+  </v-container>
+</template>
 
 <script>
 import axios from 'axios'
@@ -173,15 +81,15 @@ export default {
   data () {
     return {
       rooms: [
-        {
-          id: '',
-          title: '',
-          name: '',
-          status: 'Available',
-          startTime: '',
-          endTime: '',
-          color: 'green'
-        }
+        // {
+        //   id: '',
+        //   title: '',
+        //   name: '',
+        //   status: 'Available',
+        //   startTime: '',
+        //   endTime: '',
+        //   color: 'green'
+        // }
       ],
       message: 'Welcome to Meetee Administrator',
       items: ['room', 'seat']
@@ -189,7 +97,6 @@ export default {
       // date: new Date().toISOString().substr(0, 10)
       // menu1: false,
       // time: null
-
     }
   },
 
@@ -203,15 +110,26 @@ export default {
   },
 
   created () {
-    axios.get(`http://18.139.5.203:9000/rooms`)
+    axios
+      .post('http://18.139.5.203:9000/check/available', {
+        'type': '1',
+        // 'startDate': 'April 14, 2019',
+        // 'startTime': '15:00:00',
+        // 'endTime': '17:00:00'
+        'startDate': 'May 25, 2019',
+        'startTime': '21:00:00',
+        'endTime': '22:00:00'
+      })
       .then(response => {
-        let res = response.data
+        let res = response.data.availableList
         console.log(res)
         console.log(res.length)
         for (let i = 0; i < res.length; i++) {
-          this.rooms[0].id = res[i].id
-          this.rooms[0].name = res[i].name
-          // console.log('id at' + i + ' : ' + this.id + ', `name` ' + name)
+          this.rooms.push({
+            id: res[i].roomId,
+            name: res[i].roomCode
+          })
+          console.log('at: ' + i + '\nid: ' + res[i].roomId + '\nname: ' + res[i].roomCode)
         }
       })
       .catch(e => {
@@ -219,15 +137,13 @@ export default {
       })
   }
 }
-
 </script>
 
 <style lang="scss" scoped>
-
-.text-red{
+.text-red {
   color: red
 }
-.text-green{
+.text-green {
   color: green
 }
 </style>
