@@ -131,7 +131,7 @@
             >
               <material-stats-card
                 :color="room.status"
-                :title="room.title"
+                :title="'ID: ' + room.id"
                 :value="room.name"
                 :sub-text="room.start_time + ' - ' + room.end_time"
                 icon="mdi-store"
@@ -167,7 +167,7 @@
                 :color="room.status"
                 :title="'ID: ' + room.id"
                 :value="room.name"
-                :sub-text="room.start_time"
+                :sub-text="room.start_time + ' - ' + room.end_time"
                 icon="mdi-seat-recline-normal"
                 sub-icon="mdi-calendar"
               />
@@ -235,7 +235,7 @@ export default {
     //   'endTime': endTime
     // }
     axios
-      .post('http://18.139.5.203:9000/check/unavailable', {
+      .post('http://18.139.12.132:9000/check/unavailable', {
         // 'type': '1',
         // 'startDate': startDate,
         // // 'startDate': 'April 14, 2019',
@@ -272,7 +272,7 @@ export default {
       })
 
     axios
-      .post('http://18.139.5.203:9000/check/unavailable', {
+      .post('http://18.139.12.132:9000/check/unavailable', {
         'type': '2',
         'startDate': startDate,
         'startTime': startTime,
