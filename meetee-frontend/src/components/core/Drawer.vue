@@ -24,8 +24,7 @@
           >
             <v-img
               :src="logo"
-              height="34"
-              contain
+              aspect-ratio="3"
             />
           </v-list-tile-avatar>
           <v-list-tile-title class="title">
@@ -84,12 +83,12 @@ import {
 
 export default {
   data: () => ({
-    logo: './img/vuetifylogo.png',
+    logo: './img/logo-meetee.png',
     links: [
       {
-        to: '/reservation',
+        to: '/roomstatus',
         icon: 'mdi-view-dashboard',
-        text: 'Reservation'
+        text: 'Room Status'
       },
       {
         to: '/dashboard',

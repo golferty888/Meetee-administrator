@@ -5,8 +5,8 @@
  */
 export default [
   {
-    path: '/reservation',
-    view: 'Reservation'
+    path: '/roomstatus',
+    view: 'RoomStatus'
   },
   {
     path: '/dashboard',
